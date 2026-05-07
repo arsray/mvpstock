@@ -1,9 +1,18 @@
 {
-  "schema_version": 1,
-  "cash_usd": 100000.0,
-  "positions_shares": {},
-  "as_of_trade_date": null,
+  "as_of_trade_date": "2026-05-06",
+  "bench_anchor_date": "2026-05-06",
+  "bench_units": 136.27134,
+  "cash_usd": 6167.97,
   "initial_cash_usd": 100000.0,
-  "bench_units": null,
-  "bench_anchor_date": null
+  "positions_shares": {
+    "AAPL": 18,
+    "AMD": 50,
+    "AMZN": 57,
+    "GOOGL": 46,
+    "MSFT": 6,
+    "NVDA": 38,
+    "TSLA": 26,
+    "UNH": 35
+  },
+  "schema_version": 1
 }

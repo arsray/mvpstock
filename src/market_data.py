@@ -6,8 +6,11 @@ from pathlib import Path
 from typing import Iterable
 
 import pandas as pd
+import requests
 import yfinance as yf
 from yfinance.exceptions import YFRateLimitError
+
+TWELVE_DATA_TIME_SERIES = "https://api.twelvedata.com/time_series"
 
 
 def _closes_from_download(raw: pd.DataFrame, syms: list[str]) -> pd.DataFrame:
@@ -39,6 +42,77 @@ def load_closes_csv(path: Path) -> pd.DataFrame:
     for c in raw.columns:
         raw[c] = pd.to_numeric(raw[c], errors="coerce")
     return raw
+
+
+def _twelvedata_close_series(
+    symbol: str,
+    *,
+    api_key: str,
+    outputsize: int,
+) -> pd.Series:
+    """One `time_series` call per symbol (1 API credit per call on typical plans)."""
+    params = {
+        "symbol": symbol,
+        "interval": "1day",
+        "apikey": api_key,
+        "outputsize": max(1, min(int(outputsize), 5000)),
+        "order": "asc",
+    }
+    for attempt in range(4):
+        r = requests.get(TWELVE_DATA_TIME_SERIES, params=params, timeout=90)
+        if r.status_code == 429 and attempt < 3:
+            time.sleep(65.0)
+            continue
+        r.raise_for_status()
+        data = r.json()
+        if data.get("status") == "error":
+            msg = str(data.get("message") or data)
+            if "api credit" in msg.lower() or "limit" in msg.lower() or "rate" in msg.lower():
+                if attempt < 3:
+                    time.sleep(65.0)
+                    continue
+            raise RuntimeError(f"Twelve Data {symbol}: {msg}")
+        values = data.get("values") or []
+        if not values:
+            return pd.Series(dtype=float, name=symbol)
+        idx: list[pd.Timestamp] = []
+        vals: list[float] = []
+        for row in values:
+            if row.get("close") is None:
+                continue
+            idx.append(pd.Timestamp(row["datetime"]).normalize())
+            vals.append(float(row["close"]))
+        if not idx:
+            return pd.Series(dtype=float, name=symbol)
+        s = pd.Series(vals, index=idx, name=symbol, dtype=float)
+        s = s[~s.index.duplicated(keep="last")]
+        s.index = pd.to_datetime(s.index).tz_localize(None)
+        return s.sort_index()
+
+
+def fetch_closes_twelvedata(
+    tickers: Iterable[str],
+    *,
+    api_key: str,
+    min_interval_sec: float = 11.0,
+    outputsize: int = 2000,
+) -> pd.DataFrame:
+    """
+    Columns = tickers, index = date. One REST request per ticker.
+    Default 11s gap keeps under 6 requests/minute (Twelve Data free tier friendly).
+    """
+    syms = list(dict.fromkeys(tickers))
+    if not syms:
+        return pd.DataFrame()
+    if not api_key.strip():
+        raise ValueError("Twelve Data api_key is empty")
+
+    out: dict[str, pd.Series] = {}
+    for i, sym in enumerate(syms):
+        if i > 0 and min_interval_sec > 0:
+            time.sleep(float(min_interval_sec))
+        out[sym] = _twelvedata_close_series(sym, api_key=api_key.strip(), outputsize=outputsize)
+    return pd.DataFrame(out).sort_index()
 
 
 def fetch_closes(

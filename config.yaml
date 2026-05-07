@@ -14,6 +14,15 @@ signals:
 
 benchmark_ticker: SPY
 
+# Real quotes: twelvedata (recommended) or yfinance (often rate-limited).
+# API key: environment variable TWELVE_DATA_API_KEY (never commit).
+prices:
+  provider: twelvedata
+  twelvedata:
+    # Twelve Data free tier: stay under 8 req/min — 11s ~= max 5.45/min.
+    min_interval_sec: 11
+    outputsize: 2000
+
 paths:
   portfolio: data/portfolio.json
   equity_history: data/equity_history.jsonl

@@ -2,12 +2,21 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
+import requests
+
 from .load_config import load_app_config, load_watchlist
-from .market_data import fetch_closes, latest_trade_date, load_closes_csv, price_on_or_before
+from .market_data import (
+    fetch_closes,
+    fetch_closes_twelvedata,
+    latest_trade_date,
+    load_closes_csv,
+    price_on_or_before,
+)
 from .paths import repo_root
 from .portfolio_engine import (
     apply_strategy_day,
@@ -45,7 +54,36 @@ def main(argv: list[str] | None = None) -> int:
             return 2
         closes = closes[[c for c in fetch_syms if c in closes.columns]]
     else:
-        closes = fetch_closes(fetch_syms, period="400d", interval="1d")
+        prov = cfg.price_provider
+        if prov == "twelvedata":
+            key = os.environ.get("TWELVE_DATA_API_KEY", "").strip()
+            if not key:
+                print(
+                    "Set environment variable TWELVE_DATA_API_KEY (Twelve Data API key).",
+                    file=sys.stderr,
+                )
+                return 2
+            try:
+                closes = fetch_closes_twelvedata(
+                    fetch_syms,
+                    api_key=key,
+                    min_interval_sec=cfg.twelvedata_min_interval_sec,
+                    outputsize=cfg.twelvedata_outputsize,
+                )
+            except requests.RequestException as e:
+                print(f"Twelve Data HTTP error: {e}", file=sys.stderr)
+                return 2
+            except (RuntimeError, ValueError, KeyError) as e:
+                print(f"Twelve Data error: {e}", file=sys.stderr)
+                return 2
+        elif prov == "yfinance":
+            closes = fetch_closes(fetch_syms, period="400d", interval="1d")
+        else:
+            print(
+                f"Unknown config prices.provider={prov!r} (use twelvedata or yfinance).",
+                file=sys.stderr,
+            )
+            return 2
     if closes.empty:
         print("No market data", file=sys.stderr)
         return 2
@@ -113,6 +151,7 @@ def main(argv: list[str] | None = None) -> int:
         "signals": cfg.signals,
         "benchmark_ticker": cfg.benchmark_ticker,
         "execution_bar": cfg.execution_bar,
+        "prices_provider": cfg.price_provider,
     }
 
     generated_at = datetime.now(timezone.utc)
