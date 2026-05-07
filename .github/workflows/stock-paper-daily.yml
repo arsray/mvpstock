@@ -13,9 +13,10 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # v5+ / v6+ use Node 24 (Node 20 actions deprecated on GitHub-hosted runners).
+      - uses: actions/checkout@v5
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -29,7 +30,7 @@ jobs:
       - name: Generate report
         run: python -m src.run --prices-csv examples/sample_closes_wide.csv
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: stock-paper-report
           path: output/report.html
