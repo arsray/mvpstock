@@ -6,11 +6,18 @@ on:
     # Weekdays ~after US cash close (UTC). Tune for DST / your timezone.
     - cron: "35 21 * * 1-5"
 
+# Required for Pages + OIDC deploy.
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  run:
+  build:
     runs-on: ubuntu-latest
     steps:
       # v5+ / v6+ use Node 24 (Node 20 actions deprecated on GitHub-hosted runners).
@@ -30,8 +37,27 @@ jobs:
       - name: Generate report
         run: python -m src.run --prices-csv examples/sample_closes_wide.csv
 
+      - name: Prepare GitHub Pages site
+        run: mkdir -p _site && cp output/report.html _site/index.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
       - uses: actions/upload-artifact@v6
         with:
           name: stock-paper-report
           path: output/report.html
           if-no-files-found: warn
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

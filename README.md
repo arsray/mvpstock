@@ -69,8 +69,16 @@ Use SSH remote instead if you prefer (`git@github.com:...`).
 
 ## GitHub Actions
 
-Workflow `.github/workflows/stock-paper-daily.yml` runs on a weekday cron and uploads `report.html` as an artifact. **State**: either commit `data/portfolio.json` (and accept bot pushes) or treat each CI run as stateless (starts from `data/portfolio.json` in the repo). For a continuous simulation, keep `portfolio.json` in git between runs.
+Workflow `.github/workflows/stock-paper-daily.yml` runs on a weekday cron, uploads `report.html` as a downloadable artifact, and **deploys the same HTML to GitHub Pages** (see below). **State**: either commit `data/portfolio.json` (and accept bot pushes) or treat each CI run as stateless (starts from `data/portfolio.json` in the repo). For a continuous simulation, keep `portfolio.json` in git between runs.
 
-## GitHub Pages (optional)
+## GitHub Pages (phone bookmark)
 
-Publish `output/report.html` with your preferred Pages action; ensure you are comfortable with **public** visibility or use a private hosting path instead.
+The workflow copies `output/report.html` to the site root as `index.html` and runs `actions/deploy-pages`. **One-time setup** in the GitHub UI:
+
+1. **Settings** → **Pages** → **Build and deployment** → **Source**: select **GitHub Actions** (not “Deploy from a branch”).
+2. Push the workflow; after the first successful run, **Settings** → **Pages** shows the public URL (usually `https://<user>.github.io/<repo>/`).
+3. On your phone: open that URL in Safari, use **Share → Add to Home Screen** for a one-tap icon. Each daily run refreshes the same URL.
+
+**Privacy**: the Pages URL is generally **world-accessible** unless your org uses private GitHub Pages. Do not put account balances you consider sensitive in the report if the repo or site is public.
+
+If the `deploy` job waits for approval, check **Settings** → **Environments** → **github-pages** and remove required reviewers, or approve the pending deployment in the Actions run.

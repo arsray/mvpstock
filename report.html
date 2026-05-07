@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>StockPaperMVP — 2025-07-16</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 16px; line-height: 1.45; }
+    table { border-collapse: collapse; width: 100%; max-width: 960px; }
+    th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+    th { background: #f4f4f4; }
+    .muted { color: #555; font-size: 0.95rem; }
+    code { background: #f0f0f0; padding: 2px 6px; }
+  </style>
+</head>
+<body>
+  <h1>StockPaperMVP</h1>
+  <p class="muted">As of trade date: <b>2025-07-16</b> · Generated UTC: <b>2026-05-07 07:46:26Z</b></p>
+  <p><b>Portfolio equity:</b> $100,000.00 &nbsp;·&nbsp; <b>vs initial:</b> +0.00%</p>
+  <p><b>Benchmark (SPY) buy &amp; hold (since anchor):</b> $100,000.00 (-0.00% vs initial)</p>
+  <p class="muted">Personal paper simulation using third‑party market data. Not investment advice. Past performance does not guarantee future results.</p>
+
+  <h2>Configuration snapshot</h2>
+  <pre>{
+  &quot;stock_weight_cap&quot;: 0.95,
+  &quot;signals&quot;: {
+    &quot;mode&quot;: &quot;momentum&quot;,
+    &quot;lookback_days&quot;: 20,
+    &quot;buy_top_n&quot;: 8,
+    &quot;sell_bottom_n&quot;: 5
+  },
+  &quot;benchmark_ticker&quot;: &quot;SPY&quot;,
+  &quot;execution_bar&quot;: &quot;close&quot;
+}</pre>
+
+  <h2>Signals (placeholder = momentum)</h2>
+  <table>
+    <thead><tr><th>Ticker</th><th>Rank</th><th>Score</th><th>Zone</th></tr></thead>
+    <tbody><tr><td>NFLX</td><td>1</td><td>0.1122</td><td>buy</td></tr><tr><td>MSFT</td><td>2</td><td>0.0535</td><td>buy</td></tr><tr><td>AMD</td><td>3</td><td>0.0479</td><td>buy</td></tr><tr><td>KO</td><td>4</td><td>0.0408</td><td>buy</td></tr><tr><td>AAPL</td><td>5</td><td>0.0349</td><td>buy</td></tr><tr><td>V</td><td>6</td><td>0.0317</td><td>buy</td></tr><tr><td>DIS</td><td>7</td><td>0.0299</td><td>buy</td></tr><tr><td>UNH</td><td>8</td><td>0.0147</td><td>buy</td></tr><tr><td>COST</td><td>9</td><td>0.0083</td><td>hold</td></tr><tr><td>TSLA</td><td>10</td><td>0.0019</td><td>hold</td></tr><tr><td>GOOGL</td><td>11</td><td>-0.0238</td><td>hold</td></tr><tr><td>PEP</td><td>12</td><td>-0.0314</td><td>hold</td></tr><tr><td>JPM</td><td>13</td><td>-0.0316</td><td>hold</td></tr><tr><td>HD</td><td>14</td><td>-0.0330</td><td>hold</td></tr><tr><td>XOM</td><td>15</td><td>-0.0342</td><td>hold</td></tr><tr><td>AMZN</td><td>16</td><td>-0.0392</td><td>sell</td></tr><tr><td>JNJ</td><td>17</td><td>-0.0457</td><td>sell</td></tr><tr><td>NVDA</td><td>18</td><td>-0.0502</td><td>sell</td></tr><tr><td>META</td><td>19</td><td>-0.0534</td><td>sell</td></tr><tr><td>PG</td><td>20</td><td>-0.1279</td><td>sell</td></tr></tbody>
+  </table>
+
+  <h2>Target weights (after rank-weighted buys)</h2>
+  <table>
+    <thead><tr><th>Ticker</th><th>Weight</th></tr></thead>
+    <tbody><tr><td>AAPL</td><td>0.1056</td></tr><tr><td>AMD</td><td>0.1583</td></tr><tr><td>AMZN</td><td>0.0000</td></tr><tr><td>COST</td><td>0.0000</td></tr><tr><td>DIS</td><td>0.0528</td></tr><tr><td>GOOGL</td><td>0.0000</td></tr><tr><td>HD</td><td>0.0000</td></tr><tr><td>JNJ</td><td>0.0000</td></tr><tr><td>JPM</td><td>0.0000</td></tr><tr><td>KO</td><td>0.1319</td></tr><tr><td>META</td><td>0.0000</td></tr><tr><td>MSFT</td><td>0.1847</td></tr><tr><td>NFLX</td><td>0.2111</td></tr><tr><td>NVDA</td><td>0.0000</td></tr><tr><td>PEP</td><td>0.0000</td></tr><tr><td>PG</td><td>0.0000</td></tr><tr><td>TSLA</td><td>0.0000</td></tr><tr><td>UNH</td><td>0.0264</td></tr><tr><td>V</td><td>0.0792</td></tr><tr><td>XOM</td><td>0.0000</td></tr></tbody>
+  </table>
+
+  <h2>Trades today (integer shares)</h2>
+  <table>
+    <thead><tr><th>Side</th><th>Ticker</th><th>Shares</th><th>Price</th><th>Notional</th></tr></thead>
+    <tbody><tr><td>buy</td><td>AAPL</td><td>111</td><td>94.8675</td><td>10530.29</td></tr><tr><td>buy</td><td>AMD</td><td>157</td><td>100.3175</td><td>15749.85</td></tr><tr><td>buy</td><td>DIS</td><td>44</td><td>118.0905</td><td>5195.98</td></tr><tr><td>buy</td><td>KO</td><td>136</td><td>96.855</td><td>13172.28</td></tr><tr><td>buy</td><td>MSFT</td><td>192</td><td>95.7383</td><td>18381.75</td></tr><tr><td>buy</td><td>NFLX</td><td>228</td><td>92.5048</td><td>21091.09</td></tr><tr><td>buy</td><td>UNH</td><td>30</td><td>86.7236</td><td>2601.71</td></tr><tr><td>buy</td><td>V</td><td>66</td><td>118.9584</td><td>7851.25</td></tr></tbody>
+  </table>
+
+  <h2>Portfolio JSON</h2>
+  <pre>{
+  &quot;cash_usd&quot;: 5425.79,
+  &quot;positions_shares&quot;: {
+    &quot;AAPL&quot;: 111,
+    &quot;AMD&quot;: 157,
+    &quot;DIS&quot;: 44,
+    &quot;KO&quot;: 136,
+    &quot;MSFT&quot;: 192,
+    &quot;NFLX&quot;: 228,
+    &quot;UNH&quot;: 30,
+    &quot;V&quot;: 66
+  },
+  &quot;as_of_trade_date&quot;: &quot;2025-07-16&quot;,
+  &quot;equity_usd&quot;: 100000.0,
+  &quot;benchmark_ticker&quot;: &quot;SPY&quot;,
+  &quot;bench_equity_usd&quot;: 100000.0
+}</pre>
+</body>
+</html>
