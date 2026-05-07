@@ -1,0 +1,9 @@
+{
+  "schema_version": 1,
+  "cash_usd": 100000.0,
+  "positions_shares": {},
+  "as_of_trade_date": null,
+  "initial_cash_usd": 100000.0,
+  "bench_units": null,
+  "bench_anchor_date": null
+}

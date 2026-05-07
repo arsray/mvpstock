@@ -1,0 +1,21 @@
+# Paper portfolio + rank-weighted targets (personal experimentation — not investment advice).
+
+initial_cash: 100000.0
+stock_weight_cap: 0.95
+
+# Execution: trade at this bar after signals are known (close = same-day close).
+execution_bar: close
+
+signals:
+  mode: momentum
+  lookback_days: 20
+  buy_top_n: 8
+  sell_bottom_n: 5
+
+benchmark_ticker: SPY
+
+paths:
+  portfolio: data/portfolio.json
+  equity_history: data/equity_history.jsonl
+  signals_out: output/latest_signals.json
+  report_html: output/report.html

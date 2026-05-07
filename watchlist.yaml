@@ -1,0 +1,22 @@
+# US equities only (yfinance tickers). Replace with your universe (~20 names).
+tickers:
+  - AAPL
+  - MSFT
+  - GOOGL
+  - AMZN
+  - META
+  - NVDA
+  - JPM
+  - V
+  - UNH
+  - JNJ
+  - XOM
+  - COST
+  - HD
+  - PG
+  - KO
+  - PEP
+  - DIS
+  - NFLX
+  - TSLA
+  - AMD
