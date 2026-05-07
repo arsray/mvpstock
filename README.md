@@ -6,8 +6,9 @@ This is **not investment advice**.
 
 ## Quick start
 
+This tree is meant to be the **root of its own Git repository** (not nested under a larger monorepo).
+
 ```bash
-cd StockPaperMVP
 python3 -m venv .venv
 source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -51,9 +52,24 @@ GitHub Actions uses the bundled sample CSV so the workflow stays reliable; switc
 
 Among tickers with zone `buy`, weights are linear in rank (first gets weight \(n\), last gets \(1\)), scaled to the remaining stock sleeve after `hold` / `sell` handling. See `src/weights.py`.
 
+## Deploy to GitHub (standalone repo)
+
+On GitHub, create an empty **private** repository, then from **this directory**:
+
+```bash
+git init
+git branch -M main
+git add .
+git commit -m "Initial StockPaperMVP"
+git remote add origin https://github.com/<you>/<repo>.git
+git push -u origin main
+```
+
+Use SSH remote instead if you prefer (`git@github.com:...`).
+
 ## GitHub Actions
 
-Workflow `.github/workflows/stock-paper-daily.yml` (repo root) runs on a weekday cron and uploads `report.html` as an artifact. **State**: either commit `data/portfolio.json` (and accept bot pushes) or treat each CI run as stateless (starts from `data/portfolio.json` in the repo). For a continuous simulation, keep `portfolio.json` in git between runs.
+Workflow `.github/workflows/stock-paper-daily.yml` runs on a weekday cron and uploads `report.html` as an artifact. **State**: either commit `data/portfolio.json` (and accept bot pushes) or treat each CI run as stateless (starts from `data/portfolio.json` in the repo). For a continuous simulation, keep `portfolio.json` in git between runs.
 
 ## GitHub Pages (optional)
 

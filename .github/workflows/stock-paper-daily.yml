@@ -1,0 +1,36 @@
+name: StockPaper daily
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Weekdays ~after US cash close (UTC). Tune for DST / your timezone.
+    - cron: "35 21 * * 1-5"
+
+permissions:
+  contents: read
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Uses bundled synthetic OHLC so CI stays green when Yahoo rate-limits.
+      # For production runs locally or on a schedule with secrets, drop `--prices-csv`.
+      - name: Generate report
+        run: python -m src.run --prices-csv examples/sample_closes_wide.csv
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: stock-paper-report
+          path: output/report.html
+          if-no-files-found: warn
