@@ -1,19 +1,18 @@
 {
-  "as_of_trade_date": "2026-06-15",
+  "as_of_trade_date": "2026-06-16",
   "bench_anchor_date": "2026-05-06",
   "bench_units": 136.27134,
-  "cash_usd": 5134.81,
+  "cash_usd": 5736.43,
   "initial_cash_usd": 100000.0,
   "positions_shares": {
     "AAPL": 18,
-    "AMD": 35,
-    "HD": 50,
-    "JNJ": 31,
-    "JPM": 44,
+    "AMD": 40,
+    "HD": 52,
+    "JNJ": 32,
+    "JPM": 46,
     "KO": 59,
-    "MSFT": 17,
-    "PG": 78,
-    "UNH": 22,
+    "PG": 83,
+    "UNH": 25,
     "V": 7
   },
   "schema_version": 1
