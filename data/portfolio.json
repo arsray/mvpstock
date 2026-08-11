@@ -1,22 +1,21 @@
 {
-  "as_of_trade_date": "2026-08-10",
+  "as_of_trade_date": "2026-08-11",
   "bench_anchor_date": "2026-05-06",
   "bench_units": 136.27134,
-  "cash_usd": 5017.81,
+  "cash_usd": 5368.67,
   "initial_cash_usd": 100000.0,
   "positions_shares": {
-    "AMZN": 59,
+    "AMZN": 55,
     "COST": 4,
-    "DIS": 91,
-    "GOOGL": 6,
-    "HD": 13,
-    "JPM": 32,
+    "DIS": 118,
+    "HD": 20,
+    "JPM": 28,
     "KO": 56,
-    "MSFT": 37,
+    "MSFT": 38,
     "NFLX": 30,
-    "NVDA": 33,
+    "NVDA": 12,
     "V": 7,
-    "XOM": 88
+    "XOM": 107
   },
   "schema_version": 1
 }
