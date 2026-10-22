@@ -1,20 +1,21 @@
 {
-  "as_of_trade_date": "2026-10-20",
+  "as_of_trade_date": "2026-10-21",
   "bench_anchor_date": "2026-05-06",
   "bench_units": 136.27134,
-  "cash_usd": 8069.79,
+  "cash_usd": 7386.31,
   "initial_cash_usd": 100000.0,
   "positions_shares": {
     "AAPL": 12,
     "COST": 20,
-    "DIS": 140,
+    "DIS": 137,
     "GOOGL": 22,
+    "HD": 12,
     "KO": 42,
-    "MSFT": 15,
-    "PG": 74,
-    "UNH": 74,
-    "V": 67,
-    "XOM": 133
+    "MSFT": 21,
+    "PG": 49,
+    "UNH": 64,
+    "V": 74,
+    "XOM": 129
   },
   "schema_version": 1
 }
