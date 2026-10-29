@@ -1,8 +1,8 @@
 {
-  "as_of_trade_date": "2026-10-27",
+  "as_of_trade_date": "2026-10-28",
   "bench_anchor_date": "2026-05-06",
   "bench_units": 136.27134,
-  "cash_usd": 7518.73,
+  "cash_usd": 7882.77,
   "initial_cash_usd": 100000.0,
   "positions_shares": {
     "AAPL": 10,
@@ -16,7 +16,7 @@
     "TSLA": 67,
     "UNH": 33,
     "V": 43,
-    "XOM": 134
+    "XOM": 132
   },
   "schema_version": 1
 }
